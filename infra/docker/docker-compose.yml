@@ -1,6 +1,7 @@
 services:
   zookeeper:
-    image: bitnami/zookeeper:3.8
+    image: docker.io/bitnami/zookeeper:3.8
+    pull_policy: always
     ports:
       - "2181:2181"
     environment:
@@ -14,7 +15,8 @@ services:
       - bank-offers
 
   kafka:
-    image: bitnami/kafka:3.6.2
+    image: docker.io/bitnami/kafka:3.6.2
+    pull_policy: always
     ports:
       - "9092:9092"
     environment:
