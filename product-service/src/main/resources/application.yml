@@ -1,0 +1,61 @@
+spring:
+  application:
+    name: product-service
+  datasource:
+    url: ${PRODUCT_SERVICE_DB_URL:jdbc:postgresql://localhost:5433/productdb}
+    username: ${PRODUCT_SERVICE_DB_USERNAME:product}
+    password: ${PRODUCT_SERVICE_DB_PASSWORD:product}
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        format_sql: true
+    open-in-view: false
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+  kafka:
+    bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS:localhost:9092}
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+      properties:
+        spring.json.add.type.headers: false
+    properties:
+      spring.json.trusted.packages: "*"
+  cache:
+    cache-names: products
+  data:
+    redis:
+      host: ${REDIS_HOST:localhost}
+      port: ${REDIS_PORT:6379}
+
+server:
+  port: ${PRODUCT_SERVICE_PORT:8082}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,prometheus
+  metrics:
+    export:
+      prometheus:
+        enabled: true
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui/index.html
+  api-docs:
+    path: /v3/api-docs
+
+feign:
+  httpclient:
+    enabled: false
+  okhttp:
+    enabled: true
+
+bank:
+  service:
+    url: ${BANK_SERVICE_URL:http://localhost:8081}

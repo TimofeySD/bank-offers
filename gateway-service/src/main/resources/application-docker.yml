@@ -1,0 +1,16 @@
+spring:
+  cloud:
+    gateway:
+      routes:
+        - id: bank-service
+          uri: http://bank-service:8081
+          predicates:
+            - Path=/api/v1/banks/**
+        - id: product-service
+          uri: http://product-service:8082
+          predicates:
+            - Path=/api/v1/products/**
+        - id: offer-service
+          uri: http://product-service:8082
+          predicates:
+            - Path=/api/v1/offers/**

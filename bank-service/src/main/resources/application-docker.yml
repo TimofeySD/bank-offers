@@ -1,0 +1,9 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://postgres-bank:5432/bankdb
+    username: bank_user
+    password: bank_pass
+
+logging:
+  level:
+    root: INFO
