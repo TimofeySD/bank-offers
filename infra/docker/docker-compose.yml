@@ -14,7 +14,7 @@ services:
       - bank-offers
 
   kafka:
-    image: bitnami/kafka:3.7
+    image: bitnami/kafka:3.6.2
     ports:
       - "9092:9092"
     environment:
