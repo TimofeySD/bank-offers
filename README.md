@@ -36,6 +36,9 @@
    docker compose up -d --build
    ```
 
+   > Если образы Kafka/Zookeeper не скачиваются, убедитесь, что у вас последняя версия `infra/docker/docker-compose.yml` с тагами
+   > `bitnami/zookeeper:3.8` и `bitnami/kafka:3.6.2`. Старые теги 3.9/3.7 больше недоступны в Docker Hub.
+
 3. **Проверка статуса**
 
    ```bash
@@ -100,6 +103,17 @@ curl 'http://localhost:8080/api/v1/offers?page=0&size=10'
 ```bash
 # Просмотреть логи сервиса
 docker compose logs -f product-service
+
+## Диагностика проблем с docker compose
+
+1. **Обновите окружение** – синхронизируйте репозиторий с последними изменениями, особенно файлом
+   `infra/docker/docker-compose.yml`. В нём должны быть актуальные теги `bitnami/zookeeper:3.8` и `bitnami/kafka:3.6.2`.
+2. **Очистите кэш образов** – если Docker продолжает пытаться скачать старый тег, выполните `docker image rm bitnami/zookeeper` и
+   `docker image rm bitnami/kafka`, затем повторно запустите `docker compose up -d --build`.
+3. **Проверьте доступность Docker Hub** – иногда ошибки `manifest unknown` возникают из‑за сетевых проблем. Повторите попытку или
+   включите VPN/прокси при необходимости.
+4. **Проверьте версии Docker/Compose** – требуется Docker Engine 20.10+ и `docker compose` плагин 2.20+. Обновите клиент, если видите
+   предупреждения о неподдерживаемых опциях.
 
 # Создать топик вручную (опционально)
 docker compose exec kafka kafka-topics.sh --bootstrap-server kafka:9092 --create --if-not-exists --topic product.events --replication-factor 1 --partitions 1
