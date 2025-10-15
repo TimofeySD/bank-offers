@@ -1,0 +1,14 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://postgres-product:5432/productdb
+    username: product_user
+    password: product_pass
+  kafka:
+    bootstrap-servers: kafka:9092
+  data:
+    redis:
+      host: redis
+
+bank:
+  service:
+    url: http://bank-service:8081

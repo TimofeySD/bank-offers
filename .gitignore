@@ -1,0 +1,7 @@
+.gradle/
+**/build/
+!gradle/wrapper/gradle-wrapper.properties
+*.iml
+*.log
+.DS_Store
+.env
